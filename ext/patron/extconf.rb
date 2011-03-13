@@ -23,7 +23,12 @@
 ## -------------------------------------------------------------------
 
 if RUBY_PLATFORM =~ /darwin10\.0/
-  ENV['ARCHFLAGS'] = '-force_cpusubtype_ALL -mmacosx-version-min=10.4 -arch i386 -arch ppc -arch x86_64'
+  # fix unable to compile on Snow Leapard
+  if ['a'].pack('p').size == 8
+    ENV['ARCHFLAGS'] = '-mmacosx-version-min=10.5 -arch x86_64'
+  else
+    ENV['ARCHFLAGS'] = '-force_cpusubtype_ALL -mmacosx-version-min=10.4 -arch i386 -arch ppc -arch x86_64'
+  end
 end
 
 require 'mkmf'
